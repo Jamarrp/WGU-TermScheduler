@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/assessmentCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="@string/placeholder_assessment_code"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/assessmentIcon"
+        app:layout_constraintTop_toTopOf="@+id/assessmentIcon" />
+
+    <TextView
+        android:id="@+id/assessmentName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="@string/placeholder_assessment_name"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/dash"
+        app:layout_constraintTop_toTopOf="@+id/dash" />
+
+    <TextView
+        android:id="@+id/dash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="@string/dash"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/assessmentCode"
+        app:layout_constraintTop_toTopOf="@+id/assessmentCode" />
+
+    <ImageView
+        android:id="@+id/assessmentIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/assessment_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/twotone_assessment_black_48" />
+
+    <TextView
+        android:id="@+id/assessmentDateTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="@string/placeholder_datetime"
+        app:layout_constraintStart_toEndOf="@+id/assessmentIcon"
+        app:layout_constraintTop_toBottomOf="@+id/assessmentCode" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

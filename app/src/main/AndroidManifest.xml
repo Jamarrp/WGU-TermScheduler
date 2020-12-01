@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.jamarp.wgu_termscheduler">
+
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher_wgu_terms_sq"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+
+<!-- DATABASE PROVIDER -->
+        <provider
+            android:name="Database.DataProvider"
+            android:authorities="com.jamarp.wgu_termscheduler.dataprovider"
+            android:exported="false" />
+
+<!-- ALARM RECEIVER -->
+        <receiver android:name="Utilities.AlarmHandler" />
+
+<!-- ACTIVITIES -->
+<!-- MAIN ACTIVITY -->
+        <activity
+            android:name="com.jamarp.wgu_termscheduler.MainActivity"
+            android:label="@string/title_activity_main"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+<!-- TERM LIST ACTIVITY -->
+        <activity
+            android:name="Terms.TermActivities.TermListActivity"
+            android:label="@string/term_list"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jamarp.wgu_termscheduler.MainActivity" />
+        </activity>
+
+<!-- TERM DETAIL ACTIVITY -->
+        <activity
+            android:name="Terms.TermActivities.TermDetailActivity"
+            android:label="@string/term_detail"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jamarp.wgu_termscheduler.MainActivity" />
+        </activity>
+
+<!-- TERM EDITOR ACTIVITY -->
+        <activity
+            android:name="Terms.TermActivities.TermEditorActivity"
+            android:label="@string/term_editor"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jamarp.wgu_termscheduler.MainActivity" />
+        </activity>
+
+<!-- COURSE LIST ACTIVITY -->
+        <activity
+            android:name="Courses.CourseActivities.CourseListActivity"
+            android:label="@string/course_list"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jamarp.wgu_termscheduler.MainActivity" />
+        </activity>
+
+<!-- COURSE DETAIL ACTIVITY -->
+        <activity
+            android:name="Courses.CourseActivities.CourseDetailActivity"
+            android:label="@string/course_detail"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jamarp.wgu_termscheduler.MainActivity" />
+        </activity>
+
+<!-- COURSE EDITOR ACTIVITY -->
+        <activity
+            android:name="Courses.CourseActivities.CourseEditorActivity"
+            android:label="@string/course_editor"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jamarp.wgu_termscheduler.MainActivity" />
+        </activity>
+
+<!-- COURSE NOTE LIST ACTIVITY -->
+        <activity
+            android:name="Courses.CourseActivities.CourseNoteListActivity"
+            android:label="@string/course_note_list"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jamarp.wgu_termscheduler.MainActivity" />
+        </activity>
+
+<!-- ASSESSMENT LIST ACTIVITY -->
+        <activity
+            android:name="Assessments.AssessmentActivities.AssessmentListActivity"
+            android:label="@string/assessment_list"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jamarp.wgu_termscheduler.MainActivity" />
+        </activity>
+
+<!-- ASSESSMENT DETAIL ACTIVITY -->
+        <activity
+            android:name="Assessments.AssessmentActivities.AssessmentDetailActivity"
+            android:label="@string/assessment_detail"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jamarp.wgu_termscheduler.MainActivity" />
+        </activity>
+
+<!-- COURSE NOTE DETAIL ACTIVITY -->
+        <activity
+            android:name="Courses.CourseActivities.CourseNoteDetailActivity"
+            android:label="@string/course_note_detail"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jamarp.wgu_termscheduler.MainActivity" />
+        </activity>
+
+<!-- ASSESSMENT NOTE LIST ACTIVITY -->
+        <activity
+            android:name="Assessments.AssessmentActivities.AssessmentNoteListActivity"
+            android:label="@string/assessment_note_list"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jamarp.wgu_termscheduler.MainActivity" />
+        </activity>
+
+<!-- ASSESSMENT NOTE DETAIL ACTIVITY -->
+        <activity
+            android:name="Assessments.AssessmentActivities.AssessmentNoteDetailActivity"
+            android:label="@string/assessment_note_detail"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jamarp.wgu_termscheduler.MainActivity" />
+        </activity>
+
+<!-- ASSESSMENT EDITOR ACTIVITY -->
+        <activity
+            android:name="Assessments.AssessmentActivities.AssessmentEditorActivity"
+            android:label="@string/assessment_editor"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jamarp.wgu_termscheduler.MainActivity" />
+        </activity>
+
+<!-- COURSE NOTE EDITOR ACTIVITY -->
+        <activity
+            android:name="Courses.CourseActivities.CourseNoteEditorActivity"
+            android:label="@string/course_note_editor"
+            android:parentActivityName="Courses.CourseActivities.CourseNoteListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jamarp.wgu_termscheduler.MainActivity" />
+        </activity>
+
+<!-- ASSESSMENT NOTE EDITOR ACTIVITY -->
+        <activity
+            android:name="Assessments.AssessmentActivities.AssessmentNoteEditorActivity"
+            android:label="@string/assessment_note_editor"
+            android:parentActivityName="Assessments.AssessmentActivities.AssessmentNoteListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jamarp.wgu_termscheduler.MainActivity" />
+        </activity>
+    </application>
+
+</manifest>

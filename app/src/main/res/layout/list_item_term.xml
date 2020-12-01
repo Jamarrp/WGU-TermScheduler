@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp">
+
+    <TextView
+        android:id="@+id/termNameText"
+        android:layout_width="351dp"
+        android:layout_height="30dp"
+        android:maxLines="1"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text="@string/placeholder_term_name"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/termIcon"
+        app:layout_constraintTop_toTopOf="@+id/termIcon" />
+
+    <TextView
+        android:id="@+id/termStartDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="@string/date_start"
+        app:layout_constraintStart_toEndOf="@+id/termIcon"
+        app:layout_constraintTop_toBottomOf="@+id/termNameText" />
+
+    <TextView
+        android:id="@+id/termEndDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="@string/date_end"
+        app:layout_constraintStart_toEndOf="@+id/dateDash"
+        app:layout_constraintTop_toBottomOf="@+id/termNameText" />
+
+    <TextView
+        android:id="@+id/dateDash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="@string/dash"
+        app:layout_constraintStart_toEndOf="@+id/termStartDate"
+        app:layout_constraintTop_toBottomOf="@+id/termNameText" />
+
+    <ImageView
+        android:id="@+id/termIcon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:contentDescription="@string/term_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/twotone_current_term_black_48" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
