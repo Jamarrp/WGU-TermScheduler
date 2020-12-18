@@ -12,8 +12,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
+import android.os.SystemClock;
+import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
 import com.jamarp.wgu_termscheduler.MainActivity;
@@ -35,28 +38,52 @@ public class AlarmHandler extends BroadcastReceiver {
     public static final String alarmFile = "alarmFile";
     public static final String nextAlarmField = "nextAlarmId";
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onReceive(Context context, Intent intent) {
+
+        Log.i("alarmLogTag", "onReceive");
+
+        int notifyID = 1;
+        String CHANNEL_ID = "my_channel_01";// The id of the channel.
+        CharSequence name = "Notification";// The user-visible name of the channel.
+        int importance = NotificationManager.IMPORTANCE_HIGH;
+        NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
+
         String destination = intent.getStringExtra("destination");
+
         if (destination == null || destination.isEmpty()) {
             destination = "";
         }
 
-        int id = intent.getIntExtra("id", 0);
+        long id = intent.getLongExtra("id", 0);
         String alarmTitle = intent.getStringExtra("title");
         String alarmText = intent.getStringExtra("text");
         int nextAlarmId = intent.getIntExtra("nextAlarmId", getAndIncrementNextAlarmId(context));
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
-                .setSmallIcon(R.drawable.twotone_schedule_24)
+        Log.i("alarmLogTag", "title " + alarmTitle);
+        Log.i("alarmLogTag", "text " + alarmText);
+
+        // Need to create another screen for course tracking.
+
+        // Screenshot of progress tracking and copy of document.
+
+        // Create a notification and set the notification channel.
+        Notification.Builder builder = new Notification.Builder(context)
                 .setContentTitle(alarmTitle)
-                .setContentText(alarmText);
+                .setContentText(alarmText)
+                .setSmallIcon(R.drawable.twotone_schedule_24)
+                .setChannelId(CHANNEL_ID);
+
+
         Intent resultIntent;
         Uri uri;
         SharedPreferences sharedPreferences;
 
         switch (destination) {
             case "course":
+                Log.i("alarmLogTag", "course");
+
                 Course course = DataManager.getCourse(context, id);
                 if (course != null && course.notifications == 1) {
                     resultIntent = new Intent(context, CourseDetailActivity.class);
@@ -68,6 +95,8 @@ public class AlarmHandler extends BroadcastReceiver {
                 }
                 break;
             case "assessment":
+                Log.i("alarmLogTag", "assignment");
+
                 Assessment assessment = DataManager.getAssessment(context, id);
                 if (assessment != null && assessment.notifications == 1) {
                     resultIntent = new Intent(context, AssessmentDetailActivity.class);
@@ -79,6 +108,8 @@ public class AlarmHandler extends BroadcastReceiver {
                 }
                 break;
             default:
+                Log.i("alarmLogTag", "default");
+
                 resultIntent = new Intent(context, MainActivity.class);
                 break;
         }
@@ -88,12 +119,25 @@ public class AlarmHandler extends BroadcastReceiver {
         stackBuilder.addNextIntent(resultIntent);
         PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(resultPendingIntent).setAutoCancel(true);
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(nextAlarmId, builder.build());
+
+        NotificationManager mNotificationManager =
+                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            mNotificationManager.createNotificationChannel(mChannel);
+        }
+        // Issue the notification.
+        mNotificationManager.notify(nextAlarmId , builder.build());
+
+        Log.i("alarmLogTag", "end");
+
+//        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+//        notificationManager.notify(nextAlarmId, builder.build());
     }
 
     public static boolean scheduleCourseAlarm(Context context, long id, long time, String title, String text) {
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+
+        Log.i("alarmLogTag", "set "+id);
+
         int nextAlarmId = getNextAlarmId(context);
         Intent intentAlarm = new Intent(context, AlarmHandler.class);
         intentAlarm.putExtra("id", id);
@@ -101,19 +145,24 @@ public class AlarmHandler extends BroadcastReceiver {
         intentAlarm.putExtra("text", text);
         intentAlarm.putExtra("destination", "course");
         intentAlarm.putExtra("nextAlarmId", nextAlarmId);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, time, PendingIntent.getBroadcast(context, nextAlarmId, intentAlarm, PendingIntent.FLAG_ONE_SHOT));
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, intentAlarm, 0);
+
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP,  time, alarmIntent);
 
         SharedPreferences sp = context.getSharedPreferences(courseAlarmFile, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.putInt(Long.toString(id), nextAlarmId);
-        editor.commit();
+        editor.apply();
 
         incrementNextAlarmId(context);
         return true;
     }
 
     public static boolean scheduleAssessmentAlarm(Context context, int id, long time, String tile, String text) {
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+
+        Log.i("alarmLogTag", "set "+ id);
+
         int nextAlarmId = getNextAlarmId(context);
         Intent intentAlarm = new Intent(context, AlarmHandler.class);
         intentAlarm.putExtra("id", id);
@@ -121,12 +170,16 @@ public class AlarmHandler extends BroadcastReceiver {
         intentAlarm.putExtra("text", text);
         intentAlarm.putExtra("destination", "assessment");
         intentAlarm.putExtra("nextAlarmId", nextAlarmId);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, time, PendingIntent.getBroadcast(context, 1, intentAlarm, PendingIntent.FLAG_UPDATE_CURRENT));
+
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, intentAlarm, 0);
+
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP,  time, alarmIntent);
 
         SharedPreferences sp = context.getSharedPreferences(assessmentAlarmFile, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.putInt(Long.toString(id), nextAlarmId);
-        editor.commit();
+        editor.apply();
 
         incrementNextAlarmId(context);
         return true;

@@ -21,6 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:paddingBottom="5dp"
         android:text="@string/course_name"
         android:textAppearance="?android:attr/textAppearanceLarge"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,10 +33,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/courseName"
         android:layout_alignParentStart="true"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
         android:text="@string/date_start"
-        app:layout_constraintStart_toStartOf="@+id/courseName"
+        app:layout_constraintStart_toEndOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/courseName" />
 
     <TextView
@@ -43,10 +44,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/courseName"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
         android:text="@string/date_end"
-        app:layout_constraintStart_toStartOf="@+id/courseStartDate"
+        app:layout_constraintStart_toEndOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/courseStartDate" />
 
     <TextView
@@ -54,10 +55,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/courseStartDate"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
         android:text="@string/planned"
-        app:layout_constraintStart_toStartOf="@+id/courseEndDate"
+        app:layout_constraintStart_toEndOf="@+id/textView3"
         app:layout_constraintTop_toBottomOf="@+id/courseEndDate" />
 
     <ImageButton
@@ -99,5 +100,58 @@
         app:layout_constraintEnd_toEndOf="@+id/courseAssessmentsButton"
         app:layout_constraintStart_toEndOf="@+id/courseNotesButton"
         app:layout_constraintTop_toBottomOf="@+id/courseAssessmentsButton" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="15dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="15dp"
+        android:text="@string/course_start"
+        app:layout_constraintEnd_toEndOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/courseName" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="15dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="15dp"
+        android:text="@string/course_end"
+        app:layout_constraintEnd_toEndOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="15dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="15dp"
+        android:text="@string/course_status"
+        app:layout_constraintStart_toStartOf="@+id/courseName"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <Button
+        android:id="@+id/courseStartAlertButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="activateCourseStartAlert"
+        android:text="@string/enable_notification"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.686"
+        app:layout_constraintStart_toEndOf="@+id/courseStartDate"
+        app:layout_constraintTop_toTopOf="@+id/courseStartDate" />
+
+    <Button
+        android:id="@+id/courseEndAlertButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="activateCourseEndAlert"
+        android:text="@string/enable_notification"
+        app:layout_constraintStart_toStartOf="@+id/courseStartAlertButton"
+        app:layout_constraintTop_toBottomOf="@+id/courseStartAlertButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

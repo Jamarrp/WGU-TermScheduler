@@ -129,16 +129,9 @@ public class AssessmentDetailActivity extends AppCompatActivity {
     private boolean enableNotifications() {
         long now = DateManager.todayLong();
 
-        AlarmHandler.scheduleAssessmentAlarm(getApplicationContext(), (int) assessmentId, System.currentTimeMillis()
-                + 1000, "Assessment today.", assessment.name + " assessment time: " + assessment.datetime);
         if (now <= DateManager.getDateTimestamp(assessment.datetime)) {
-            AlarmHandler.scheduleAssessmentAlarm(getApplicationContext(), (int) assessmentId, DateManager.getDateTimestamp(assessment.datetime), "Assessment is today!", assessment.name + " takes place on " + assessment.datetime);
-        }
-        if (now <= DateManager.getDateTimestamp(assessment.datetime) - 3 * 24 * 60 * 60 * 1000) {
-            AlarmHandler.scheduleAssessmentAlarm(getApplicationContext(), (int) assessmentId, DateManager.getDateTimestamp(assessment.datetime) - 3 * 24 * 60 * 60 * 1000, "Assessment is in three days!", assessment.name + " takes place on " + assessment.datetime);
-        }
-        if (now <= DateManager.getDateTimestamp(assessment.datetime) - 21 * 24 * 60 * 60 * 1000) {
-            AlarmHandler.scheduleAssessmentAlarm(getApplicationContext(), (int) assessmentId, DateManager.getDateTimestamp(assessment.datetime) - 21 * 24 * 60 * 60 * 1000, "Assessment is in three weeks!", assessment.name + " takes place on " + assessment.datetime);
+            AlarmHandler.scheduleCourseAlarm(getApplicationContext(), assessmentId, DateManager.getDateTimestamp(assessment.datetime),
+                    "Assessment start date", assessment.name + " begins on " + assessment.datetime);
         }
 
         assessment.notifications = 1;

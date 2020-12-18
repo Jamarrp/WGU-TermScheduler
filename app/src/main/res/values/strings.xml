@@ -55,6 +55,7 @@
     <string name="edit_note">Edit Note</string>
     <string name="edit_term">Edit Term</string>
     <string name="edit_term_title">Edit Term</string>
+    <string name="enable_notification">Enable Notification</string>
     <string name="enable_notifications">Enable Notifications</string>
     <string name="enter_new_note">Enter New Note</string>
     <string name="mark_term_active">Mark Term Active</string>

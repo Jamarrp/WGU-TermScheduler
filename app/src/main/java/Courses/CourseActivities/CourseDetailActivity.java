@@ -49,7 +49,7 @@ public class CourseDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_detail);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
@@ -62,9 +62,9 @@ public class CourseDetailActivity extends AppCompatActivity {
         findElements();
     }
 
-    @SuppressLint("SetTextI18n")
+    //@SuppressLint("SetTextI18n")
     private void setStatusLabel() {
-        TextView courseStatus = (TextView) findViewById(R.id.courseStatus);
+        TextView courseStatus = findViewById(R.id.courseStatus);
         String status = "";
         switch (course.status.toString()) {
             case "PLANNED":
@@ -80,17 +80,17 @@ public class CourseDetailActivity extends AppCompatActivity {
                 status = "Dropped";
                 break;
         }
-        courseStatus.setText("Status: " + status);
+        courseStatus.setText(status);
     }
 
     private void findElements() {
-        courseName = (TextView) findViewById(R.id.courseName);
+        courseName = findViewById(R.id.courseName);
         courseName.setText(course.name);
 
-        startDate = (TextView) findViewById(R.id.courseStartDate);
+        startDate = findViewById(R.id.courseStartDate);
         startDate.setText(course.start);
 
-        endDate = (TextView) findViewById(R.id.courseEndDate);
+        endDate = findViewById(R.id.courseEndDate);
         endDate.setText(course.end);
     }
 
@@ -212,12 +212,45 @@ public class CourseDetailActivity extends AppCompatActivity {
         return true;
     }
 
+    public boolean activateCourseStartAlert(View view) {
+        System.out.println("1. Enable course notifications button pressed.");
+
+        long now = DateManager.todayLong();
+        System.out.println("2. NOW: " + now);
+
+        if (now <= DateManager.getDateTimestamp(course.start)) {
+            System.out.println("3. if NOW: " + now + "<= Course Start: " + DateManager.getDateTimestamp(course.start));
+            AlarmHandler.scheduleCourseAlarm(getApplicationContext(), courseId, DateManager.getDateTimestamp(course.start),
+                    "Course start date", course.name + " begins on " + course.start);
+        }
+        course.notifications = 1;
+        course.saveChanges(this);
+        showMenuOptions();
+        return true;
+    }
+
+    public boolean activateCourseEndAlert(View view) {
+        long now = DateManager.todayLong();
+
+        if (now <= DateManager.getDateTimestamp(course.end)) {
+            AlarmHandler.scheduleCourseAlarm(getApplicationContext(), courseId, DateManager.getDateTimestamp(course.end),
+                    "Course end date", course.name + " ends on " + course.end);
+        }
+        course.notifications = 1;
+        course.saveChanges(this);
+        showMenuOptions();
+        return true;
+    }
+
     private boolean enableNotifications() {
         long now = DateManager.todayLong();
 
         if (now <= DateManager.getDateTimestamp(course.start)) {
             AlarmHandler.scheduleCourseAlarm(getApplicationContext(), courseId, DateManager.getDateTimestamp(course.start),
                     "Course start date", course.name + " begins on " + course.start);
+        } else if (now <= DateManager.getDateTimestamp(course.end)) {
+            AlarmHandler.scheduleCourseAlarm(getApplicationContext(), courseId, DateManager.getDateTimestamp(course.end),
+                    "Course end date", course.name + " ends on " + course.end);
         }
         course.notifications = 1;
         course.saveChanges(this);
